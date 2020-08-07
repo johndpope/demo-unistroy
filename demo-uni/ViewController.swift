@@ -21,52 +21,56 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var addButtonOutlet: UIButton!
     
     ////////DOWNLOAD
-//    @IBAction func downloadButton(_ sender: Any) {
-//        showAlert()
-//        dataProvider.startDownload()
-        ///////Чиста для тестов тут
+    @IBAction func downloadButton(_ sender: Any) {
+        showAlert()
+        dataProvider.startDownload()
+        /////Чиста для тестов тут
 
-//        let sofaScene = SCNScene(named: "assets.scnassets/sofa/Sofa.scn")
-//        let furnitureNode = Furniture()
-//        furnitureNode.name = "sofa"
-//        sofaScene?.rootNode.childNodes.forEach{
-//            furnitureNode.addChildNode($0)
-//        }
-//        sceneView.scene.rootNode.addChildNode(furnitureNode)
-//
-//    }
-//    @IBAction func unzipButton(_ sender: Any) {
-////                   unzipFile()
-//
-//        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-//
-//        let pathToObject = documentDirectory + "/dodge/kakoyta_fail.fbx" //"/sofa/Sofa1.DAE" //"ship/ship.scn"
-//        //С сцн все работает заебись
-//
-////        let fileUrl = URL(fileURLWithPath: pathToObject)
-//
-//
-//        let scaleFactor:Float = 0.0025
-//
-//        do {
-////            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
-//            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.defaultQuality])
-//            let modelScene = assimpScene.modelScene
-//            modelScene.rootNode.childNodes.forEach {
-//                $0.position =   $0.position * scaleFactor
-//                $0.scale = $0.scale * scaleFactor
-//                sceneView.scene.rootNode.addChildNode($0)
-//
-//            }
-//
-//
-//        }
-//        catch
-//        {
-//
-//        }
-//
-//
+        let sofaScene = SCNScene(named: "assets.scnassets/sofa/Sofa.scn")
+        let furnitureNode = Furniture()
+        furnitureNode.name = "sofa"
+        sofaScene?.rootNode.childNodes.forEach{
+            furnitureNode.addChildNode($0)
+        }
+        sceneView.scene.rootNode.addChildNode(furnitureNode)
+
+    }
+    @IBAction func unzipButton() {
+//                   unzipFile()
+
+        if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
+             //let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+
+               //     let pathToObject = documentDirectory + "/dodge/kakoyta_fail.fbx" //"/sofa/Sofa1.DAE" //"ship/ship.scn"
+                    //С сцн все работает заебись
+
+            //        let fileUrl = URL(fileURLWithPath: pathToObject)
+
+
+                    let scaleFactor:Float = 1
+
+                    do {
+            //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
+                        let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.optimizeGraph, .optimizeMeshes])
+                        let modelScene = assimpScene.modelScene!
+                        modelScene.rootNode.childNodes.forEach {
+                            $0.position =   $0.position * scaleFactor
+                            $0.scale = $0.scale * scaleFactor
+                            sceneView.scene.rootNode.addChildNode($0)
+
+                        }
+
+
+                    }
+                    catch
+                    {
+
+                    }
+            
+        }
+       
+
+
 //        //Тут я пытался посмотреть пути к папкам и что в них хранится
 //        //Пути посмотреть получилось, контент папок нет
 //        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -88,13 +92,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //        }
 //
 //        wallChainsSet.textureWalls(textureLength: 1, textureWidth: 1, textureImage: UIImage(named: "assets.scnassets/images/img2.jpg"))
-//    }
-//    @IBOutlet weak var unzipOutlet: UIButton!{
-//        didSet {
-            //            unzipOutlet.isHidden = true
+    }
+    @IBOutlet weak var unzipOutlet: UIButton!{
+        didSet {
+                        unzipOutlet.isHidden = true
             
-//        }
-//    }
+        }
+    }
     ////////
     
     
@@ -187,13 +191,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         /////////
         
+       
+        
         
     }
     
     @IBAction func plusButton(_ sender: Any) {
         catalogViewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        wallChainsSet.addPointer()
+//        wallChainsSet.addPointer()
         isWallTapped = false
+         unzipButton()
     }
     
     @IBAction func continueButton(_ sender: Any) {
@@ -384,7 +391,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //        addButtonOutlet.widthAnchor.constraint(equalToConstant: 100).isActive = true
         //        addButtonOutlet.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
-    /////////DOWNLOAD    
+    /////////DOWNLOAD
     private func unzipFile() {
         
         let fileManager = FileManager()
