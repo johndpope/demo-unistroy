@@ -39,20 +39,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //                   unzipFile()
 
         if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
-             //let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
 
-               //     let pathToObject = documentDirectory + "/dodge/kakoyta_fail.fbx" //"/sofa/Sofa1.DAE" //"ship/ship.scn"
-                    //С сцн все работает заебись
-
-            //        let fileUrl = URL(fileURLWithPath: pathToObject)
-
-
-                    let scaleFactor:Float = 1
+            let scaleFactor:Float = 0.0025
 
                     do {
             //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
-                        let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.optimizeGraph, .optimizeMeshes])
+                        let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality])
                         let modelScene = assimpScene.modelScene!
+//                        sceneView.scene = modelScene
                         modelScene.rootNode.childNodes.forEach {
                             $0.position =   $0.position * scaleFactor
                             $0.scale = $0.scale * scaleFactor
