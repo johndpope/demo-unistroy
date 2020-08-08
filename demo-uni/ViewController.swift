@@ -45,6 +45,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     do {
             //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
                         let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality])
+                        
+                        print("skeletonNode:",assimpScene.skeletonNode)
+                        print("animations:",assimpScene.animations)
+                        
+                        for (index,animScene) in assimpScene.animationScenes{
+                            print("animScene:",animScene)
+                            
+                        }
                         let modelScene = assimpScene.modelScene!
 //                        sceneView.scene = modelScene
                         modelScene.rootNode.childNodes.forEach {
@@ -53,6 +61,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                             sceneView.scene.rootNode.addChildNode($0)
 
                         }
+                        
+                        
 
 
                     }
