@@ -16,7 +16,7 @@ import Alamofire
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
-
+    
     
     @IBOutlet weak var addButtonOutlet: UIButton!
     
@@ -25,7 +25,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         showAlert()
         dataProvider.startDownload()
         /////Чиста для тестов тут
-
+        
         let sofaScene = SCNScene(named: "assets.scnassets/sofa/Sofa.scn")
         let furnitureNode = Furniture()
         furnitureNode.name = "sofa"
@@ -33,73 +33,62 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             furnitureNode.addChildNode($0)
         }
         sceneView.scene.rootNode.addChildNode(furnitureNode)
-
+        
     }
     @IBAction func unzipButton() {
-//                   unzipFile()
-
+        //                   unzipFile()
+        
         if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
-
-            let scaleFactor:Float = 0.0025
-
-                    do {
-            //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
-                        let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality])
-                        
-                        print("skeletonNode:",assimpScene.skeletonNode)
-                        print("animations:",assimpScene.animations)
-                        
-                        for (index,animScene) in assimpScene.animationScenes{
-                            print("animScene:",animScene)
-                            
-                        }
-                        let modelScene = assimpScene.modelScene!
-//                        sceneView.scene = modelScene
-                        modelScene.rootNode.childNodes.forEach {
-                            $0.position =   $0.position * scaleFactor
-                            $0.scale = $0.scale * scaleFactor
-                            sceneView.scene.rootNode.addChildNode($0)
-
-                        }
-                        
-                        
-
-
-                    }
-                    catch
-                    {
-
-                    }
             
+            let scaleFactor:Float = 0.0025
+            
+            do {
+                //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
+                let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality])
+                
+                print("skeletonNode:",assimpScene.skeletonNode)
+                print("animations:",assimpScene.animations)
+                
+                let modelScene = assimpScene.modelScene!
+                modelScene.rootNode.childNodes.forEach {
+                    $0.position =   $0.position * scaleFactor
+                    $0.scale = $0.scale * scaleFactor
+                    sceneView.scene.rootNode.addChildNode($0)
+                    
+                }
+                
+                for animation in assimpScene.animations{
+                    
+                    if let animation = animation as? AssetImporterAnimation{
+                        print("animation:",animation.frameAnims)
+                    }
+                }
+                
+                for (index,animScene) in assimpScene.animationScenes{
+                    print("animScene:",animScene)
+                    if let animScene = animScene as? SCNScene{
+                        var settings = AssetImporterAnimSettings()
+                        let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
+                            print("ok")
+                        }
+                        
+                        var animEvent = SCNAnimationEvent.init(keyTime: 0.5, block: eventBlock)
+                        var animEvents = [animEvent]
+                        
+                        //  sceneView.scene.rootNode.addAnimation(animScene as! SCNAnimationProtocol,forKey: "ely-1",with:settings) //, forKey: <#T##String?#>)
+                    }
+                }
+                
+            }catch {
+            
+            }
         }
-       
-
-
-//        //Тут я пытался посмотреть пути к папкам и что в них хранится
-//        //Пути посмотреть получилось, контент папок нет
-//        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//        do {
-//            // Get the directory contents urls (including subfolders urls)
-//            let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: [])
-//            print("//////////////CONTENT")
-//            print(directoryContents)
-//            print("//////////////CONTENT")
-//            print("//////////////CONTENT_________IN___FOLDERS")
-//            for item in directoryContents {
-//                print(try FileManager.default.contentsOfDirectory(atPath: item.absoluteString))
-//            }
-//            print("//////////////CONTENT_________IN___FOLDERS")
-//
-//        } catch {
-//            print("huiii")
-//        }
-//
-//        wallChainsSet.textureWalls(textureLength: 1, textureWidth: 1, textureImage: UIImage(named: "assets.scnassets/images/img2.jpg"))
     }
+    
+    
     @IBOutlet weak var unzipOutlet: UIButton!{
         didSet {
-                        unzipOutlet.isHidden = true
+            unzipOutlet.isHidden = true
             
         }
     }
@@ -195,20 +184,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         /////////
         
-       
+        
         
         
     }
     
     @IBAction func plusButton(_ sender: Any) {
         catalogViewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-//        wallChainsSet.addPointer()
+        //        wallChainsSet.addPointer()
         isWallTapped = false
-         unzipButton()
+        unzipButton()
     }
     
     @IBAction func continueButton(_ sender: Any) {
-       wallChainsSet.addChainSet()
+        wallChainsSet.addChainSet()
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
