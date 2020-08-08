@@ -14,10 +14,10 @@ import SceneKit.ModelIO
 import AssetImportKit
 import Alamofire
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     
     
-    
+    var robotNode:SCNNode? = nil
     @IBOutlet weak var addButtonOutlet: UIButton!
     
     ////////DOWNLOAD
@@ -54,6 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     $0.position =   $0.position * scaleFactor
                     $0.scale = $0.scale * scaleFactor
                     sceneView.scene.rootNode.addChildNode($0)
+                    self.robotNode = $0
                     
                 }
                 
@@ -68,14 +69,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     print("animScene:",animScene)
                     if let animScene = animScene as? SCNScene{
                         var settings = AssetImporterAnimSettings()
+                        settings.delegate = self
                         let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
                             print("ok")
                         }
                         
-                        var animEvent = SCNAnimationEvent.init(keyTime: 0.5, block: eventBlock)
-                        var animEvents = [animEvent]
-                        
-                        //  sceneView.scene.rootNode.addAnimation(animScene as! SCNAnimationProtocol,forKey: "ely-1",with:settings) //, forKey: <#T##String?#>)
+                        let animEvent = SCNAnimationEvent.init(keyTime: 0.5, block: eventBlock)
+                        let animEvents = [animEvent]
+                        settings.animationEvents = animEvents
+                        //self.robotNode?.addAnimationScene(animScene, forKey: "ely-1", with: settings)
+                        sceneView.scene.rootNode.addAnimationScene(animScene, forKey: "ely-1", with: settings)
+
                     }
                 }
                 
