@@ -70,8 +70,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
                     if let animScene = animScene as? SCNScene{
                         var settings = AssetImporterAnimSettings()
                         settings.delegate = self
+                        settings.repeatCount = 3
                         let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
-                            print("ok")
+                            print("Animation Event triggered")
                         }
                         
                         let animEvent = SCNAnimationEvent.init(keyTime: 0.5, block: eventBlock)
