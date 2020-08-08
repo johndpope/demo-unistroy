@@ -70,12 +70,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
                     if let animScene = animScene as? SCNScene{
                         var settings = AssetImporterAnimSettings()
                         settings.delegate = self
-                        settings.repeatCount = 3
+                        settings.repeatCount = 3333333
                         let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
                             print("Animation Event triggered")
                         }
                         
-                        let animEvent = SCNAnimationEvent.init(keyTime: 0.5, block: eventBlock)
+                        let animEvent = SCNAnimationEvent.init(keyTime: 1, block: eventBlock)
                         let animEvents = [animEvent]
                         settings.animationEvents = animEvents
                         //self.robotNode?.addAnimationScene(animScene, forKey: "ely-1", with: settings)
