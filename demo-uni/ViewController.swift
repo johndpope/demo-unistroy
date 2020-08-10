@@ -106,7 +106,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
 //                        sceneView.scene.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
                         
                         // just attempt to hijack view and coerce the animation scene to sceneView.scene
-                        sceneView.scene = animScene as! SCNScene
+                        sceneView.scene = animScene as! SCNScene // FAILS
                         
                     }
                     
