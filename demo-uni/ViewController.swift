@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  demo-uni
-
-//  Created by Tim Zagirov on 08/03/2019.
-//  Copyright © 2019 Tim Zagirov. All rights reserved.
-
 
 import UIKit
 import ARKit
@@ -14,6 +7,45 @@ import SceneKit.ModelIO
 import AssetImportKit
 import Alamofire
 
+
+
+/*
+ NOTES someone @Nanxia suggested that this fixed things....
+ 
+ https://github.com/dmsurti/AssimpKit/issues/101
+ B4
+ public func makeAnimationScenes() {
+     for animSceneKey in self.animations.allKeys {
+         if let animSceneKey = animSceneKey as? String {
+             if let assimpAnim = animations.value(forKey: animSceneKey) as? AssetImporterAnimation {
+                 let animScene = SCNScene()
+                 animScene.rootNode.addChildNode(skeletonNode.clone())
+                 addAnimation(assimpAnimation: assimpAnim,
+                              to: animScene)
+                 animationScenes.setValue(animScene,
+                                          forKey: animSceneKey)
+             }
+         }
+     }
+ }
+ 
+ 
+ AFTER
+ public func makeAnimationScenes() {
+     for animSceneKey in self.animations.allKeys {
+         if let animSceneKey = animSceneKey as? String {
+             if let assimpAnim = animations.value(forKey: animSceneKey) as? AssetImporterAnimation {
+                 let animScene = SCNScene()
+                 animScene.rootNode.addChildNode(skeletonNode.clone())
+                 addAnimation(assimpAnimation: assimpAnim,to: self.modelScene!)
+                 animationScenes.setValue( self.modelScene!,
+                                          forKey: animSceneKey)
+             }
+         }
+     }
+ }
+ 
+ */
 class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     
     var settings = AssetImporterAnimSettings()
@@ -21,6 +53,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     @IBOutlet weak var addButtonOutlet: UIButton!
     
     
+    
+//    The gist is: 1. you load the model scene,
+//    2. then load the animations (from the scene you just loaded or another scene if they are defined externally)
+//    3. and add the animation to the model scene. The above docs referred to use the same scenarios.
     @IBAction func loadFBX() {
 
         if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
@@ -28,43 +64,54 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
             let scaleFactor:Float = 0.0025
             
             do {
-                //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
-                let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality]) //realtimeFast realtimeQuality realtimeMaxQuality
-                // sceneView.scene = assimpScene
-                print("skeletonNode:",assimpScene.skeletonNode)
-                print("animations:",assimpScene.animations)
-                print("animationKeys:",assimpScene.animationScenes.allKeys)
-                //assimpScene.makeAnimationScenes()
-                for animSceneKey in assimpScene.animations.allKeys {
-                    if let animSceneKey = animSceneKey as? String {
-                        if let assimpAnim = assimpScene.animations.value(forKey: animSceneKey) as? AssetImporterAnimation {
-                            let animScene = SCNScene()
-                            animScene.rootNode.addChildNode(assimpScene.skeletonNode.clone())
-                            assimpScene.addAnimation(assimpAnimation: assimpAnim,to: assimpScene.modelScene!)
-                            assimpScene.animationScenes.setValue( assimpScene.modelScene!,forKey: animSceneKey)
-                        }
-                    }
-                }
+                // 1. you load the model scene
+                let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality]) //realtimeFast realtimeQuality realtimeMaxQuality  [.optimizeGraph,
                 
-                
-                // 
-                for (_,animScene) in assimpScene.animationScenes{
-                    print("animScene:",animScene)
-                    if animScene is SCNScene{
-                        let animation = assimpScene.animations["ely-1"] as! AssetImporterAnimation
-                        assimpScene.modelScene!.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings)
-                    }
-                }
-                
-                //                sceneView.scene = assimpScene.modelScene!
+                // ( add the model to the scene / scale it down / is this wrong?)
                 let modelScene = assimpScene.modelScene!
                 modelScene.rootNode.childNodes.forEach {
                     $0.position =   $0.position * scaleFactor
                     $0.scale = $0.scale * scaleFactor
-                    sceneView.scene.rootNode.addChildNode($0)
+                    sceneView.scene.rootNode.addChildNode($0) // the robot is added - it has a root - below it fails to add animation due to  no root: nil nil
                     self.robotNode = $0
                 }
                 
+                
+//                print("skeletonNode:",assimpScene.skeletonNode)
+//                print("animations:",assimpScene.animations)
+//                print("animationKeys:",assimpScene.animationScenes.allKeys)
+                //assimpScene.makeAnimationScenes()
+//                for animSceneKey in assimpScene.animations.allKeys {
+//                    if let animSceneKey = animSceneKey as? String {
+//                        if let assimpAnim = assimpScene.animations.value(forKey: animSceneKey) as? AssetImporterAnimation {
+//                            let animScene = SCNScene()
+//                            animScene.rootNode.addChildNode(assimpScene.skeletonNode.clone())
+//                            assimpScene.addAnimation(assimpAnimation: assimpAnim,to: assimpScene.modelScene!)
+//                            assimpScene.animationScenes.setValue( assimpScene.modelScene!,forKey: animSceneKey)
+//                        }
+//                    }
+//                }
+//
+                // 2. then load the animations
+                // either these lines are wrong... OR
+                for (_,animScene) in assimpScene.animationScenes{
+                    print("animScene:",animScene)
+                    if animScene is SCNScene{
+                        let animation = assimpScene.animations["ely-1"] as! AssetImporterAnimation
+                         print("animation:",animation)
+//                        3. and add the animation to the model scene.
+//                        assimpScene.modelScene!.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+//                        self.robotNode?.parent?.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+//                        self.robotNode?.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+//                        sceneView.scene.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+                        
+                        // just attempt to hijack view and coerce the animation scene to sceneView.scene
+                        sceneView.scene = animScene as! SCNScene
+                        
+                    }
+                    
+                }
+
                 sceneView.isPlaying = true
                 sceneView.showsStatistics = true
                 
@@ -159,14 +206,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
         self.sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
         
-        
+        // Settings taken from https://assimpkit.readthedocs.io/en/latest/user/tutorial.html#load-skeletal-animations
         settings.delegate = self
         settings.repeatCount = 60
         let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
             print("Animation Event triggered")
         }
         
-        let animEvent = SCNAnimationEvent.init(keyTime: 1, block: eventBlock)
+        let animEvent = SCNAnimationEvent.init(keyTime: 0.9, block: eventBlock)
         let animEvents = [animEvent]
         settings.animationEvents = animEvents
         
