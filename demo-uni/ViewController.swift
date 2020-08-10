@@ -16,76 +16,60 @@ import Alamofire
 
 class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     
-    
+    var settings = AssetImporterAnimSettings()
     var robotNode:SCNNode? = nil
     @IBOutlet weak var addButtonOutlet: UIButton!
     
-    ////////DOWNLOAD
-    @IBAction func downloadButton(_ sender: Any) {
-        showAlert()
-        dataProvider.startDownload()
-        /////Чиста для тестов тут
-        
-        let sofaScene = SCNScene(named: "assets.scnassets/sofa/Sofa.scn")
-        let furnitureNode = Furniture()
-        furnitureNode.name = "sofa"
-        sofaScene?.rootNode.childNodes.forEach{
-            furnitureNode.addChildNode($0)
-        }
-        sceneView.scene.rootNode.addChildNode(furnitureNode)
-        
-    }
-    @IBAction func unzipButton() {
-        //                   unzipFile()
-        
+    
+    @IBAction func loadFBX() {
+
         if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
             
             let scaleFactor:Float = 0.0025
             
             do {
                 //            let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps: [.optimizeGraph, .optimizeMeshes]) //для дае
-                let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality])
-                
+                let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality]) //realtimeFast realtimeQuality realtimeMaxQuality
+                // sceneView.scene = assimpScene
                 print("skeletonNode:",assimpScene.skeletonNode)
                 print("animations:",assimpScene.animations)
+                print("animationKeys:",assimpScene.animationScenes.allKeys)
+                //assimpScene.makeAnimationScenes()
+                for animSceneKey in assimpScene.animations.allKeys {
+                    if let animSceneKey = animSceneKey as? String {
+                        if let assimpAnim = assimpScene.animations.value(forKey: animSceneKey) as? AssetImporterAnimation {
+                            let animScene = SCNScene()
+                            animScene.rootNode.addChildNode(assimpScene.skeletonNode.clone())
+                            assimpScene.addAnimation(assimpAnimation: assimpAnim,to: assimpScene.modelScene!)
+                            assimpScene.animationScenes.setValue( assimpScene.modelScene!,forKey: animSceneKey)
+                        }
+                    }
+                }
                 
+                
+                // 
+                for (_,animScene) in assimpScene.animationScenes{
+                    print("animScene:",animScene)
+                    if animScene is SCNScene{
+                        let animation = assimpScene.animations["ely-1"] as! AssetImporterAnimation
+                        assimpScene.modelScene!.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings)
+                    }
+                }
+                
+                //                sceneView.scene = assimpScene.modelScene!
                 let modelScene = assimpScene.modelScene!
                 modelScene.rootNode.childNodes.forEach {
                     $0.position =   $0.position * scaleFactor
                     $0.scale = $0.scale * scaleFactor
                     sceneView.scene.rootNode.addChildNode($0)
                     self.robotNode = $0
-                    
                 }
                 
-                for animation in assimpScene.animations{
-                    
-                    if let animation = animation as? AssetImporterAnimation{
-                        print("animation:",animation.frameAnims)
-                    }
-                }
+                sceneView.isPlaying = true
+                sceneView.showsStatistics = true
                 
-                for (index,animScene) in assimpScene.animationScenes{
-                    print("animScene:",animScene)
-                    if let animScene = animScene as? SCNScene{
-                        var settings = AssetImporterAnimSettings()
-                        settings.delegate = self
-                        settings.repeatCount = 3333333
-                        let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
-                            print("Animation Event triggered")
-                        }
-                        
-                        let animEvent = SCNAnimationEvent.init(keyTime: 1, block: eventBlock)
-                        let animEvents = [animEvent]
-                        settings.animationEvents = animEvents
-                        //self.robotNode?.addAnimationScene(animScene, forKey: "ely-1", with: settings)
-                        sceneView.scene.rootNode.addAnimationScene(animScene, forKey: "ely-1", with: settings)
-
-                    }
-                }
-                
-            }catch {
-            
+            }catch let error{
+                print("error:",error)
             }
         }
     }
@@ -106,7 +90,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     }
     
     var catalogViewController: CatalogViewController!
-    var visualEffectView: UIVisualEffectView!
+    
     
     var catalogHeight:CGFloat!
     let catalogHandleAreaHeight:CGFloat = 65
@@ -167,7 +151,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
         super.viewDidLoad()
         
         catalogHeight = self.view.frame.height * 0.85
-        setupCatalog()
+        //setupCatalog()
         //        setupConstraintButton()
         let configuration = ARWorldTrackingConfiguration();
         configuration.planeDetection = .horizontal
@@ -176,18 +160,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
         sceneView.delegate = self
         
         
-        /////////DOWNLOAD
-        registerForNotification()
-        
-        dataProvider.fileLocation = { (location) in
-            
-            // Сохранить файл для дальнейшего использования
-            print("Download finished: \(location.absoluteString)")
-            self.filePath = location.absoluteString
-            self.alert.dismiss(animated: false, completion: nil)
-            self.postNotification()
+        settings.delegate = self
+        settings.repeatCount = 60
+        let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
+            print("Animation Event triggered")
         }
-        /////////
+        
+        let animEvent = SCNAnimationEvent.init(keyTime: 1, block: eventBlock)
+        let animEvents = [animEvent]
+        settings.animationEvents = animEvents
         
         
         
@@ -195,14 +176,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     }
     
     @IBAction func plusButton(_ sender: Any) {
-        catalogViewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        //        wallChainsSet.addPointer()
+        //  catalogViewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+//         wallChainsSet.addPointer()
         isWallTapped = false
-        unzipButton()
+        loadFBX()
     }
     
     @IBAction func continueButton(_ sender: Any) {
-        wallChainsSet.addChainSet()
+       // wallChainsSet.addChainSet()
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
@@ -221,9 +202,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     
     
     func setupCatalog() {
-        //        visualEffectView = UIVisualEffectView()
-        //        visualEffectView.frame = self.view.frame
-        //        self.view.addSubview(visualEffectView)
+
         
         catalogViewController = CatalogViewController(nibName:"CatalogViewController", bundle:nil)
         catalogViewController.onSelectFurniture = { furniture in
@@ -237,13 +216,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
         self.view.addSubview(catalogViewController.view)
         
         catalogViewController.view.frame = CGRect(x: 0, y: self.view.frame.height - catalogHandleAreaHeight, width: self.view.bounds.width, height: catalogHeight)
-        
-        //        catalogViewController.view.layer.shadowColor = UIColor.black.cgColor
-        //        catalogViewController.view.layer.shadowOpacity = 1
-        //        catalogViewController.view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        //        catalogViewController.view.layer.shadowRadius = 10
-        
-        
+
         
         self.catalogViewController.view.layer.cornerRadius = 12
         catalogViewController.view.clipsToBounds = true
@@ -337,18 +310,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
             
             cornerRadiusAnimator.startAnimation()
             runningAnimations.append(cornerRadiusAnimator)
-            //            блокирует кнопки эти эффекты хуй знает почему
-            //            let blurAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
-            //                switch state {
-            //                case .expanded:
-            //                    self.visualEffectView.effect = UIBlurEffect(style: .dark)
-            //                case .collapsed:
-            //                    self.visualEffectView.effect = nil
-            //                }
-            //            }
-            //
-            //            blurAnimator.startAnimation()
-            //            runningAnimations.append(blurAnimator)
+            
             
         }
     }
