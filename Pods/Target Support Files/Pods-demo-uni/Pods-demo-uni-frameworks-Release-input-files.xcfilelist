@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-demo-uni/Pods-demo-uni-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/Assimp/Assimp.framework
+${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework

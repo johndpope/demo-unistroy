@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,16 @@
 		83C74CA824DE16C500D761AE /* ely_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C74CA324DE16C500D761AE /* ely_diffuse.png */; };
 		83C74CA924DE16C500D761AE /* ely_diffuse_high.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C74CA424DE16C500D761AE /* ely_diffuse_high.png */; };
 		83C74CAA24DE16C500D761AE /* ely_specular_high.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C74CA524DE16C500D761AE /* ely_specular_high.png */; };
+		83E9520924E2258E00C2C113 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9520824E2258E00C2C113 /* Test.m */; };
+		83E9522424E225B100C2C113 /* SCNAssimpScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9520B24E225B100C2C113 /* SCNAssimpScene.m */; };
+		83E9522524E225B100C2C113 /* SCNAssimpAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9521024E225B100C2C113 /* SCNAssimpAnimation.m */; };
+		83E9522724E225B100C2C113 /* ModelFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9521524E225B100C2C113 /* ModelFile.m */; };
+		83E9522924E225B100C2C113 /* ModelLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9521724E225B100C2C113 /* ModelLog.m */; };
+		83E9522A24E225B100C2C113 /* SCNScene+AssimpImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9521A24E225B100C2C113 /* SCNScene+AssimpImport.m */; };
+		83E9522B24E225B100C2C113 /* AssimpImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9521D24E225B100C2C113 /* AssimpImageCache.m */; };
+		83E9522D24E225B100C2C113 /* SCNAssimpAnimSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9522024E225B100C2C113 /* SCNAssimpAnimSettings.m */; };
+		83E9522E24E225B100C2C113 /* AssimpImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9522124E225B100C2C113 /* AssimpImporter.m */; };
+		83E9522F24E225B100C2C113 /* SCNNode+AssimpImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E9522324E225B100C2C113 /* SCNNode+AssimpImport.m */; };
 		8A5114F52237D1D100EDAB91 /* TextureCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5114F42237D1D100EDAB91 /* TextureCollectionView.swift */; };
 		8A5114F72237D1E800EDAB91 /* TextureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5114F62237D1E800EDAB91 /* TextureCollectionViewCell.swift */; };
 		8A5114F92237D1FD00EDAB91 /* FurnitureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5114F82237D1FD00EDAB91 /* FurnitureCollectionViewCell.swift */; };
@@ -78,6 +88,33 @@
 		83C74CA324DE16C500D761AE /* ely_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ely_diffuse.png; sourceTree = "<group>"; };
 		83C74CA424DE16C500D761AE /* ely_diffuse_high.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ely_diffuse_high.png; sourceTree = "<group>"; };
 		83C74CA524DE16C500D761AE /* ely_specular_high.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ely_specular_high.png; sourceTree = "<group>"; };
+		83E9520624E2258E00C2C113 /* demo-uni-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "demo-uni-Bridging-Header.h"; sourceTree = "<group>"; };
+		83E9520724E2258E00C2C113 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		83E9520824E2258E00C2C113 /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		83E9520B24E225B100C2C113 /* SCNAssimpScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNAssimpScene.m; sourceTree = "<group>"; };
+		83E9520C24E225B100C2C113 /* AssimpSceneKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AssimpSceneKit-Prefix.pch"; sourceTree = "<group>"; };
+		83E9520D24E225B100C2C113 /* SCNTextureInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNTextureInfo.h; sourceTree = "<group>"; };
+		83E9520E24E225B100C2C113 /* AssimpImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssimpImageCache.h; sourceTree = "<group>"; };
+		83E9520F24E225B100C2C113 /* SCNAssimpAnimSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNAssimpAnimSettings.h; sourceTree = "<group>"; };
+		83E9521024E225B100C2C113 /* SCNAssimpAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNAssimpAnimation.m; sourceTree = "<group>"; };
+		83E9521224E225B100C2C113 /* ModelFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelFile.h; sourceTree = "<group>"; };
+		83E9521324E225B100C2C113 /* AssimpImporterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssimpImporterTests.m; sourceTree = "<group>"; };
+		83E9521424E225B100C2C113 /* ModelLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelLog.h; sourceTree = "<group>"; };
+		83E9521524E225B100C2C113 /* ModelFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelFile.m; sourceTree = "<group>"; };
+		83E9521624E225B100C2C113 /* SCNSceneTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNSceneTests.m; sourceTree = "<group>"; };
+		83E9521724E225B100C2C113 /* ModelLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelLog.m; sourceTree = "<group>"; };
+		83E9521824E225B100C2C113 /* PostProcessingFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostProcessingFlags.h; sourceTree = "<group>"; };
+		83E9521924E225B100C2C113 /* SCNNode+AssimpImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCNNode+AssimpImport.h"; sourceTree = "<group>"; };
+		83E9521A24E225B100C2C113 /* SCNScene+AssimpImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCNScene+AssimpImport.m"; sourceTree = "<group>"; };
+		83E9521B24E225B100C2C113 /* AssimpImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssimpImporter.h; sourceTree = "<group>"; };
+		83E9521C24E225B100C2C113 /* SCNAssimpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNAssimpScene.h; sourceTree = "<group>"; };
+		83E9521D24E225B100C2C113 /* AssimpImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssimpImageCache.m; sourceTree = "<group>"; };
+		83E9521E24E225B100C2C113 /* SCNTextureInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNTextureInfo.m; sourceTree = "<group>"; };
+		83E9521F24E225B100C2C113 /* SCNAssimpAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNAssimpAnimation.h; sourceTree = "<group>"; };
+		83E9522024E225B100C2C113 /* SCNAssimpAnimSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNAssimpAnimSettings.m; sourceTree = "<group>"; };
+		83E9522124E225B100C2C113 /* AssimpImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssimpImporter.m; sourceTree = "<group>"; };
+		83E9522224E225B100C2C113 /* SCNScene+AssimpImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCNScene+AssimpImport.h"; sourceTree = "<group>"; };
+		83E9522324E225B100C2C113 /* SCNNode+AssimpImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCNNode+AssimpImport.m"; sourceTree = "<group>"; };
 		89260617FFAFDB99B0C48F84 /* Pods_demo_uni.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_demo_uni.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5114F42237D1D100EDAB91 /* TextureCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureCollectionView.swift; sourceTree = "<group>"; };
 		8A5114F62237D1E800EDAB91 /* TextureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -112,10 +149,14 @@
 		2295A779223292A700C9E594 = {
 			isa = PBXGroup;
 			children = (
+				83E9520A24E225B100C2C113 /* Model */,
+				83E9520724E2258E00C2C113 /* Test.h */,
+				83E9520824E2258E00C2C113 /* Test.m */,
 				2295A784223292A700C9E594 /* demo-uni */,
 				2295A783223292A700C9E594 /* Products */,
 				528BEE7A58F7FECE0BC75753 /* Pods */,
 				2144D9DF9DAB6E893B0813EF /* Frameworks */,
+				83E9520624E2258E00C2C113 /* demo-uni-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,6 +204,46 @@
 				83C74CA524DE16C500D761AE /* ely_specular_high.png */,
 			);
 			path = Ely;
+			sourceTree = "<group>";
+		};
+		83E9520A24E225B100C2C113 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83E9520E24E225B100C2C113 /* AssimpImageCache.h */,
+				83E9521D24E225B100C2C113 /* AssimpImageCache.m */,
+				83E9521B24E225B100C2C113 /* AssimpImporter.h */,
+				83E9522124E225B100C2C113 /* AssimpImporter.m */,
+				83E9520C24E225B100C2C113 /* AssimpSceneKit-Prefix.pch */,
+				83E9521824E225B100C2C113 /* PostProcessingFlags.h */,
+				83E9521F24E225B100C2C113 /* SCNAssimpAnimation.h */,
+				83E9521024E225B100C2C113 /* SCNAssimpAnimation.m */,
+				83E9520F24E225B100C2C113 /* SCNAssimpAnimSettings.h */,
+				83E9522024E225B100C2C113 /* SCNAssimpAnimSettings.m */,
+				83E9521C24E225B100C2C113 /* SCNAssimpScene.h */,
+				83E9520B24E225B100C2C113 /* SCNAssimpScene.m */,
+				83E9521924E225B100C2C113 /* SCNNode+AssimpImport.h */,
+				83E9522324E225B100C2C113 /* SCNNode+AssimpImport.m */,
+				83E9522224E225B100C2C113 /* SCNScene+AssimpImport.h */,
+				83E9521A24E225B100C2C113 /* SCNScene+AssimpImport.m */,
+				83E9520D24E225B100C2C113 /* SCNTextureInfo.h */,
+				83E9521E24E225B100C2C113 /* SCNTextureInfo.m */,
+				83E9521124E225B100C2C113 /* Tests */,
+			);
+			name = Model;
+			path = "demo-uni/Model";
+			sourceTree = "<group>";
+		};
+		83E9521124E225B100C2C113 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				83E9521224E225B100C2C113 /* ModelFile.h */,
+				83E9521324E225B100C2C113 /* AssimpImporterTests.m */,
+				83E9521424E225B100C2C113 /* ModelLog.h */,
+				83E9521524E225B100C2C113 /* ModelFile.m */,
+				83E9521624E225B100C2C113 /* SCNSceneTests.m */,
+				83E9521724E225B100C2C113 /* ModelLog.m */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		8A5114EA2237D11600EDAB91 /* App */ = {
@@ -264,7 +345,7 @@
 				TargetAttributes = {
 					2295A781223292A700C9E594 = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1160;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -319,20 +400,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-demo-uni/Pods-demo-uni-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AssetImportKit/AssetImportKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-demo-uni/Pods-demo-uni-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AssetImportKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-demo-uni/Pods-demo-uni-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -369,18 +441,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F42139822341DAF0047A6E3 /* WallCreater.swift in Sources */,
+				83E9522D24E225B100C2C113 /* SCNAssimpAnimSettings.m in Sources */,
+				83E9522A24E225B100C2C113 /* SCNScene+AssimpImport.m in Sources */,
 				1F42139A223449B40047A6E3 /* GeometryPrimitives.swift in Sources */,
+				83E9520924E2258E00C2C113 /* Test.m in Sources */,
 				8A5114FE2237D26600EDAB91 /* CatalogViewController.swift in Sources */,
+				83E9522724E225B100C2C113 /* ModelFile.m in Sources */,
+				83E9522F24E225B100C2C113 /* SCNNode+AssimpImport.m in Sources */,
 				8A5115012237D27A00EDAB91 /* CardModel.swift in Sources */,
+				83E9522924E225B100C2C113 /* ModelLog.m in Sources */,
 				8A5114F72237D1E800EDAB91 /* TextureCollectionViewCell.swift in Sources */,
 				1F423E3E224912F4002D524D /* VirtualObjects.swift in Sources */,
 				2295A78E223292A700C9E594 /* demo_uni.xcdatamodeld in Sources */,
 				1F42139C22344E4D0047A6E3 /* Math.swift in Sources */,
+				83E9522B24E225B100C2C113 /* AssimpImageCache.m in Sources */,
 				1FFD84FE2248169300077536 /* NodeRender.metal in Sources */,
 				1F5A698D22356C59007BB23B /* ExtendedNode.swift in Sources */,
+				83E9522E24E225B100C2C113 /* AssimpImporter.m in Sources */,
+				83E9522524E225B100C2C113 /* SCNAssimpAnimation.m in Sources */,
 				2295A7A02232AB3C00C9E594 /* ARInteraction.swift in Sources */,
 				8A5114FB2237D23600EDAB91 /* FurnitureCollectionView.swift in Sources */,
 				2295A788223292A700C9E594 /* ViewController.swift in Sources */,
+				83E9522424E225B100C2C113 /* SCNAssimpScene.m in Sources */,
 				8A5114F92237D1FD00EDAB91 /* FurnitureCollectionViewCell.swift in Sources */,
 				1F70E4F02241258500C1DFA5 /* DataProvider.swift in Sources */,
 				1F09F576224BCAFA004E9123 /* AlamofireNetworkRequest.swift in Sources */,
@@ -532,6 +614,8 @@
 			baseConfigurationReference = 2A06286FAE31C528B14F7555 /* Pods-demo-uni.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48K8QNQU37;
 				ENABLE_BITCODE = NO;
@@ -539,6 +623,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "demo-uni/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -547,8 +633,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ARQ.Demo.Build.0003;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "demo-uni-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -558,6 +646,8 @@
 			baseConfigurationReference = 8DCD84BD65BDBE20E7AB3FC8 /* Pods-demo-uni.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48K8QNQU37;
 				ENABLE_BITCODE = NO;
@@ -565,6 +655,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "demo-uni/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -573,8 +665,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ARQ.Demo.Build.0003;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "demo-uni-Bridging-Header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

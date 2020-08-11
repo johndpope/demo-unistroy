@@ -1,24 +1,32 @@
 PODS:
   - Alamofire (5.0.0-beta.3)
-  - AssetImportKit (1.0.8)
+  - Assimp (5.0.1)
   - ZIPFoundation (0.9.8)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-beta.3)
-  - AssetImportKit
+  - Assimp (from `https://github.com/ndreca/Assimp.git`)
   - ZIPFoundation
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - AssetImportKit
     - ZIPFoundation
+
+EXTERNAL SOURCES:
+  Assimp:
+    :git: https://github.com/ndreca/Assimp.git
+
+CHECKOUT OPTIONS:
+  Assimp:
+    :commit: 4c89f9304570f805aad850ff41c6a5ece78603ac
+    :git: https://github.com/ndreca/Assimp.git
 
 SPEC CHECKSUMS:
   Alamofire: 50d6fa7e8cbe7f84559e86ab641ffd029db655f8
-  AssetImportKit: 187cd0857691c154b3fe9cf993c94bff27639589
+  Assimp: ab9e29b545912f0c6ffaca398caca90b4ee1ce97
   ZIPFoundation: b1f07e4409baf1641f3fe5948b2a1c3f5c500cb1
 
-PODFILE CHECKSUM: 0ec1f686de7bcb2ba8a638d841fd6bf20df913a3
+PODFILE CHECKSUM: 3b26748053e9ce292fddd586517d6de6b94c59ad
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.9.3

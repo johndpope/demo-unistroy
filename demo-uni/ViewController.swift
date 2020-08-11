@@ -4,8 +4,9 @@ import ARKit
 import UserNotifications
 import ZIPFoundation
 import SceneKit.ModelIO
-import AssetImportKit
+//import AssetImportKit
 import Alamofire
+import Assimp
 
 
 
@@ -48,7 +49,7 @@ import Alamofire
  */
 class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
     
-    var settings = AssetImporterAnimSettings()
+//    var settings = SCNAssimpAnimSettings()
     var robotNode:SCNNode? = nil
     @IBOutlet weak var addButtonOutlet: UIButton!
     
@@ -58,13 +59,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
 //    2. then load the animations (from the scene you just loaded or another scene if they are defined externally)
 //    3. and add the animation to the model scene. The above docs referred to use the same scenarios.
     @IBAction func loadFBX() {
-
+/*
         if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
             
             let scaleFactor:Float = 0.0025
             
             do {
                 // 1. you load the model scene
+                
                 let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality]) //realtimeFast realtimeQuality realtimeMaxQuality  [.optimizeGraph,
                 
                 // ( add the model to the scene / scale it down / is this wrong?)
@@ -103,10 +105,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
 //                        assimpScene.modelScene!.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
 //                        self.robotNode?.parent?.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
 //                        self.robotNode?.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
-//                        sceneView.scene.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+                        sceneView.scene.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
                         
                         // just attempt to hijack view and coerce the animation scene to sceneView.scene
-                        sceneView.scene = animScene as! SCNScene // FAILS
+//                        sceneView.scene = animScene as! SCNScene // FAILS
                         
                     }
                     
@@ -118,9 +120,76 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
             }catch let error{
                 print("error:",error)
             }
-        }
+        }*/
     }
-    
+//
+//     @IBAction func loadFBX2() {
+//
+//            if let pathToObject = Bundle.main.path(forResource: "ely", ofType: "fbx") {
+//
+//                let scaleFactor:Float = 0.0025
+//
+//                do {
+//                    // 1. you load the model scene
+//                    let fbxUrl = URL(fileURLWithPath: pathToObject)
+//                    let assimpScene = try SCNScene.assimpScene(with: fbxUrl, postProcessFlags: []) //AssimpKitPostProcessSteps.AssimpKit_Process_FlipUVs ,AssimpKitPostProcessSteps.AssimpKit_Process_Triangulate
+//                   // let assimpScene = try SCNScene.assimpScene(filePath: pathToObject, postProcessSteps:[.defaultQuality]) //realtimeFast realtimeQuality realtimeMaxQuality  [.optimizeGraph,
+//
+//                    // ( add the model to the scene / scale it down / is this wrong?)
+//                    let modelScene = assimpScene!.modelScene!
+//                    modelScene.rootNode.childNodes.forEach {
+//                        $0.position =   $0.position * scaleFactor
+//                        $0.scale = $0.scale * scaleFactor
+//                        sceneView.scene.rootNode.addChildNode($0) // the robot is added - it has a root - below it fails to add animation due to  no root: nil nil
+//                        self.robotNode = $0
+//                    }
+//
+//
+//    //                print("skeletonNode:",assimpScene.skeletonNode)
+//    //                print("animations:",assimpScene.animations)
+//    //                print("animationKeys:",assimpScene.animationScenes.allKeys)
+//                    //assimpScene.makeAnimationScenes()
+//    //                for animSceneKey in assimpScene.animations.allKeys {
+//    //                    if let animSceneKey = animSceneKey as? String {
+//    //                        if let assimpAnim = assimpScene.animations.value(forKey: animSceneKey) as? AssetImporterAnimation {
+//    //                            let animScene = SCNScene()
+//    //                            animScene.rootNode.addChildNode(assimpScene.skeletonNode.clone())
+//    //                            assimpScene.addAnimation(assimpAnimation: assimpAnim,to: assimpScene.modelScene!)
+//    //                            assimpScene.animationScenes.setValue( assimpScene.modelScene!,forKey: animSceneKey)
+//    //                        }
+//    //                    }
+//    //                }
+//    //
+//                    // 2. then load the animations
+//                    // either these lines are wrong... OR
+//                    for (_,animScene) in assimpScene!.animationScenes{
+//                        print("animScene:",animScene)
+//                        if animScene is SCNScene{
+////                            let animation = assimpScene.animations["ely-1"] as! AssetImporterAnimation
+//                          //   print("animation:",animation)
+//    //                        3. and add the animation to the model scene.
+//    //                        assimpScene.modelScene!.rootNode.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+//    //                        self.robotNode?.parent?.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+//    //                        self.robotNode?.addAnimationScene(animation, forKey: "ely-1", with: settings) // FAILS
+//                            let scene = animScene as! SCNScene
+//                            sceneView.scene.rootNode.addAnimationScene(scene, forKey: "ely-1", with: settings) // FAILS
+//
+//                            // just attempt to hijack view and coerce the animation scene to sceneView.scene
+//    //                        sceneView.scene = animScene as! SCNScene // FAILS
+//
+//                        }
+//
+//                    }
+//
+//                    sceneView.isPlaying = true
+//                    sceneView.showsStatistics = true
+//
+//                }catch let error{
+//                    print("error:",error)
+//                }
+//            }
+//        }
+//
     
     @IBOutlet weak var unzipOutlet: UIButton!{
         didSet {
@@ -206,16 +275,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
         self.sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
         
-        // Settings taken from https://assimpkit.readthedocs.io/en/latest/user/tutorial.html#load-skeletal-animations
-        settings.delegate = self
-        settings.repeatCount = 60
-        let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
-            print("Animation Event triggered")
-        }
-        
-        let animEvent = SCNAnimationEvent.init(keyTime: 0.9, block: eventBlock)
-        let animEvents = [animEvent]
-        settings.animationEvents = animEvents
+//        // Settings taken from https://assimpkit.readthedocs.io/en/latest/user/tutorial.html#load-skeletal-animations
+//        settings.delegate = self
+//        settings.repeatCount = 60
+//        let eventBlock: SCNAnimationEventBlock = { animation, animatedObject, playingBackwards in
+//            print("Animation Event triggered")
+//        }
+//
+//        let animEvent = SCNAnimationEvent.init(keyTime: 0.9, block: eventBlock)
+//        let animEvents = [animEvent]
+//        settings.animationEvents = animEvents
         
         
         
@@ -226,7 +295,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CAAnimationDelegate {
         //  catalogViewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 //         wallChainsSet.addPointer()
         isWallTapped = false
-        loadFBX()
+//        loadFBX2()
     }
     
     @IBAction func continueButton(_ sender: Any) {
